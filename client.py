@@ -12,10 +12,12 @@ SERVER = sys.argv[1]
 PORT = int(sys.argv[2])
 MType = sys.argv[3]
 User = sys.argv[4]
+expires_value = sys.argv[5]
 LINE = ""
 
 if MType == 'register':
-    LINE = ('REGISTER sip:' + User + ' SIP/2.0\r\n')
+    LINE = ('REGISTER sip:' + User + ' SIP/2.0 ')
+    LINE += ('Expires: ' + expires_value + '\r\n\r\n')
 
 #for words in sys.argv[5:]:
  #   LINE = LINE + " " + words
@@ -28,6 +30,6 @@ if MType == 'register':
         data = my_socket.recv(1024)
         print('Recibido -- ', data.decode('utf-8'))
 else:
-    sys.exit('Usage: client.py ip puerto register sip_address')
+    sys.exit('Usage: client.py ip puerto register sip_address expires_value')
 
 print("Socket terminado.")
