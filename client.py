@@ -32,4 +32,5 @@ if MType == 'register':
 else:
     sys.exit('Usage: client.py ip puerto register sip_address expires_value')
 
+
 print("Socket terminado.")
