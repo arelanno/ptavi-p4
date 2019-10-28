@@ -12,7 +12,7 @@ import time
 
 class SIPRegisterHandler(socketserver.DatagramRequestHandler):
     """
-    Echo server class
+    OK reply server class
     """
     dicc_register = {}
  
@@ -21,13 +21,14 @@ class SIPRegisterHandler(socketserver.DatagramRequestHandler):
         handle method of the server class
         (all requests will be handled by this method)
         """
-        self.wfile.write(b"Hemos recibido tu peticion")
+        self.wfile.write(b"Hemos recibido tu peticion ")
+        self.json2registered()
+
         info_user= {}
 
         for line in self.rfile:
             if line.decode('utf-8') != "\r\n":
                 print("El cliente nos manda ", line.decode('utf-8'))
-             ## print(self.client_address)
                 text_rec = line.decode('utf-8').split(" ")
                 expires_value = int(text_rec[4])
                 if text_rec[0] == "REGISTER":
@@ -48,9 +49,18 @@ class SIPRegisterHandler(socketserver.DatagramRequestHandler):
         self.registered2json()
 
     def registered2json(self):
-        """ funcion que pasa el diccionario de clientes a json"""
+
         file = open("registered.json", 'w') 
         json.dump(self.dicc_register, file)
+
+    def json2registered(self):
+
+        try:
+            file = open('registered.json')
+            data = json.load(file)
+            self.dicc_register = data
+        except FileNotFoundError:
+            pass
 
 
 if __name__ == "__main__":
@@ -59,7 +69,7 @@ if __name__ == "__main__":
     # and calls the EchoHandler class to manage the request
     serv = socketserver.UDPServer(('', Port), SIPRegisterHandler)
 
-    print("Lanzando servidor UDP de eco...")
+    print("Lanzando servidor UDP de registro...")
     try:
         serv.serve_forever()
     except KeyboardInterrupt:
