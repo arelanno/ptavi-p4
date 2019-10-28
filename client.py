@@ -3,6 +3,7 @@
 """
 Programa cliente UDP que abre un socket a un servidor
 """
+# client.py 127.0.0.1 6001 register alex 100
 
 import socket
 import sys
