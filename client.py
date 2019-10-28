@@ -20,8 +20,6 @@ if MType == 'register':
     LINE = ('REGISTER sip:' + User + ' SIP/2.0 ')
     LINE += ('Expires: ' + expires_value + '\r\n\r\n')
 
-#for words in sys.argv[5:]:
- #   LINE = LINE + " " + words
 
 # Creamos el socket, lo configuramos y lo atamos a un servidor/puerto
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as my_socket:
